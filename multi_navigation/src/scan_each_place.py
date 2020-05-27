@@ -4,7 +4,7 @@ import sys
 import numpy as np
 import math
 import tf
-# import tf2_ros
+import tf2_ros
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
 from geometry_msgs.msg import Pose
@@ -47,13 +47,13 @@ def get_the_global_coordinates(i):
   # tfBuffer = tf2_ros.Buffer()
   # listener = tf2_ros.TransformListener(tfBuffer)
   try:
-    listener.waitForTransform("tb3_%d/base_footprint" % FTC.my_number, "tb3_%d/base_footprint" % i, rospy.Time(), rospy.Duration(4.0))
+    listener.waitForTransform("tb3_%d/base_footprint" % FTC.my_number, "tb3_%d/base_footprint" % i, rospy.Time(), rospy.Duration(1.0))
     (trans,rot) = listener.lookupTransform("tb3_%d/base_footprint" % FTC.my_number, "tb3_%d/base_footprint" % i, rospy.Time(0))
     dist = (trans[0] ** 2 + trans[1] ** 2) ** 0.5
     rect = math.atan2(trans[1], trans[0])
     return i, dist, rect
 
-  except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException) as error:
+  except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException, tf2_ros.TransformException) as error:
     print(error)
     return i, FTC.cd[i, 1], FTC.cd[i, 2]
 
@@ -82,6 +82,7 @@ def callback(data):
         y_ = sum(FTC.sd[:, 3] * FTC.flag[:, j]) / count
         FTC.cd[j, 1] = (x_ ** 2 + y_ ** 2) ** 0.5
         FTC.cd[j, 2] = math.atan2(y_, x_)
+        print("No." + str(FTC.my_number) + " to No." + str(j) + "is Local coordinates now.")
       else:
         FTC.cd[j, 0], FTC.cd[j, 1], FTC.cd[j, 2] = get_the_global_coordinates(j)
         print("No." + str(FTC.my_number) + " to No." + str(j) + "is Global coordinates now.")
