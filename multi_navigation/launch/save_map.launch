@@ -1,0 +1,11 @@
+<launch>
+  <!-- Arguments -->
+  <arg name="map_name" default="newmap"/>
+  <arg name="tb3_name" default="tb3_0"/>
+
+  <remap from="/map" to="/$(arg tb3_name)/map"/>
+
+  <node name="map_saver" pkg="map_server" type="map_saver" args="-f $(find multi_navigation)/maps/$(arg map_name)" output="screen">
+    <param name="frame_id" value="$(arg tb3_name)/map"/>
+  </node>
+</launch>

@@ -1,0 +1,10 @@
+<launch>
+  <arg name="tb3_name" default="tb3_0"/>
+
+  <group ns = "$(arg tb3_name)">
+    <node pkg="multi_navigation" name="scan_each_place" type="scan_each_place.py" output="screen">
+      <param name="turtlename" type="string" value="$(arg tb3_name)"/>
+    </node>
+
+  </group>
+</launch>

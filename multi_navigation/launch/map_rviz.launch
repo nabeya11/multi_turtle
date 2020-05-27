@@ -1,0 +1,15 @@
+<launch>
+  <!-- Arguments -->
+  <arg name="map_name" default="realmap"/>
+  <arg name="open_rviz" default="true"/>
+
+  <!-- Map server -->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(find multi_navigation)/maps/$(arg map_name).yaml"/>
+
+  <!-- rviz -->
+  <group if="$(arg open_rviz)"> 
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+        args="-d $(find multi_navigation)/rviz/move_to_goal.rviz"/>
+  </group>
+
+</launch>
