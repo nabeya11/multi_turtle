@@ -41,7 +41,10 @@ def avoid_publisher(posearray):
     if r < radius :
         try:
             vel_msg.linear.x = -x_limit * (radius - r)  * math.cos(theta)
-            vel_msg.angular.z = rot_limit  * math.cos(theta) / r
+            if r == 0:
+                vel_msg.angular.z = 0
+            else:
+                vel_msg.angular.z = rot_limit  * math.cos(theta) / r
             vel_msg.angular.z *= -numpy.sign(math.sin(theta))
 
         except rospy.ROSInterruptException: pass
