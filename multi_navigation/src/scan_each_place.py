@@ -119,16 +119,14 @@ def callback(data):
 
 if __name__ == '__main__':
   try:
-    rospy.init_node('find_the_robot', anonymous=True)
+    rospy.init_node('detect_robots', anonymous=True)
     turtlename = rospy.get_param('~turtlename')
-    # turtlename = "tb3_0"
     FTC.my_number = FTC.my_number_ref[turtlename]
     for i in range(FTC.total_number_of_robots):
       if i == FTC.my_number:
         FTC.cd[i, 0] = FTC.my_number
       else:
         FTC.cd[i, 0], FTC.cd[i, 1], FTC.cd[i, 2] = get_the_global_coordinates(i)
-    # rospy.Subscriber('/%s/scan' % turtlename, LaserScan, callback)
     rospy.Subscriber('scan', LaserScan, callback)
     rospy.spin()
   except rospy.ROSInterruptException:
