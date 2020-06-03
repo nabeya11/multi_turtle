@@ -62,11 +62,11 @@ def callback(data):
     if robot_num == FTC.my_number:
       continue
     else:
-      for robot_num in range(360):
-        if (((FTC.scandata[robot_num, 2] - FTC.local_pos[robot_num, 1] * np.cos(FTC.local_pos[robot_num, 2])) ** 2 + (FTC.scandata[robot_num, 3] - FTC.local_pos[robot_num, 1] * np.sin(FTC.local_pos[robot_num, 2])) ** 2) < FTC.head_diameter ** 2):
-          FTC.flag[robot_num, robot_num] = 1
+      for i in range(360):
+        if (((FTC.scandata[i, 2] - FTC.local_pos[robot_num, 1] * np.cos(FTC.local_pos[robot_num, 2])) ** 2 + (FTC.scandata[i, 3] - FTC.local_pos[robot_num, 1] * np.sin(FTC.local_pos[robot_num, 2])) ** 2) < FTC.head_diameter ** 2):
+          FTC.flag[i, robot_num] = 1
         else:
-          FTC.flag[robot_num, robot_num] = 0
+          FTC.flag[i, robot_num] = 0
       count = sum(FTC.flag[:, robot_num])
       if count > 3:
         x_ = sum(FTC.scandata[:, 2] * FTC.flag[:, robot_num]) / count
@@ -129,7 +129,7 @@ if __name__ == '__main__':
         FTC.local_pos[robot_num, 0], FTC.local_pos[robot_num, 1], FTC.local_pos[robot_num, 2] = get_global_coordinates(robot_num)
 
     #set subscribe callback
-    rospy.Subscriber('scan', LaserScan, callback)
+    # rospy.Subscriber('scan', LaserScan, callback)
 
     main_loop()
 
