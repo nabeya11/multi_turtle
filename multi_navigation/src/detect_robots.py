@@ -57,11 +57,14 @@ def callback(data):
     if robot_num == FTC.my_number:
       continue
     else:
-      for i in range(360):
-        if ((FTC.scandata[i, 2] - FTC.local_pos[robot_num, 0]) ** 2 + (FTC.scandata[i, 3] - FTC.local_pos[robot_num, 1]) ** 2) < (FTC.head_diameter ** 2):
-          FTC.flag[i, robot_num] = 1
+      for rect in range(360):
+        if ((FTC.scandata[rect, 2] - FTC.local_pos[robot_num, 0]) ** 2 + (FTC.scandata[rect, 3] - FTC.local_pos[robot_num, 1]) ** 2) < (FTC.head_diameter ** 2):
+          FTC.flag[rect, robot_num] = 1
         else:
-          FTC.flag[i, robot_num] = 0
+          FTC.flag[rect, robot_num] = 0
+        if FTC.scandata[rect, 0] == float("inf"):
+          FTC.scandata[rect, 2] = 0
+          FTC.scandata[rect, 3] = 0
       count = sum(FTC.flag[:, robot_num])
       if count > 3:
         FTC.local_pos[robot_num, 0] = sum(FTC.scandata[:, 2] * FTC.flag[:, robot_num]) / count
@@ -108,7 +111,6 @@ def main_loop():
         #listen tf_position and keep
         FTC.tf_pos[robot_num, 0], FTC.tf_pos[robot_num, 1] = get_global_coordinates(robot_num)
 
-    print(FTC.tf_pos[robot_num, 0], FTC.tf_pos[robot_num, 1])
     rate.sleep()
 
 if __name__ == '__main__':
