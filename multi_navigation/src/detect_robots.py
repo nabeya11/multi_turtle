@@ -15,13 +15,13 @@ class FTC:
   my_number = -1
   my_number_ref = {"tb3_0":0, "tb3_1":1}
   total_number_of_robots = len(my_number_ref)
-  local_pos = np.zeros((total_number_of_robots, 2)) #  dist(m), rect(rad)
+  local_pos = np.zeros((total_number_of_robots, 2)) #  x(m), y(m)
   scandata = np.zeros((360, 4)) # scan_dist, scan_rect, scan_x, scan_y
   scandata[:, 1] = np.arange(360.0) / 180 * np.pi
   flag = np.zeros((360, total_number_of_robots))
   head_diameter = 0.15 / 2 # r = 7.5 cm
 
-  tf_pos = np.zeros((total_number_of_robots, 2)) #  dist(m), rect(rad)
+  tf_pos = np.zeros((total_number_of_robots, 2)) #  x(m), y(m)
 
   # [1] send 1 topic
   # pub1 = rospy.Publisher('rel_polar_vector', Pose, queue_size=10)
@@ -43,9 +43,7 @@ def get_global_coordinates(robot_num):
   try:
     listener.waitForTransform("tb3_%d/base_footprint" % FTC.my_number, "tb3_%d/base_footprint" % robot_num, rospy.Time(0), rospy.Duration(10.0))
     (trans,rot) = listener.lookupTransform("tb3_%d/base_footprint" % FTC.my_number, "tb3_%d/base_footprint" % robot_num, rospy.Time(0))
-    dist = (trans[0] ** 2 + trans[1] ** 2) ** 0.5
-    rect = math.atan2(trans[1], trans[0])
-    return dist, rect
+    return trans[0], trans[1]
 
   except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException, tf2_ros.TransformException) as error:
     print(error)
@@ -60,16 +58,14 @@ def callback(data):
       continue
     else:
       for i in range(360):
-        if (((FTC.scandata[i, 2] - FTC.local_pos[robot_num, 0] * np.cos(FTC.local_pos[robot_num, 1])) ** 2 + (FTC.scandata[i, 3] - FTC.local_pos[robot_num, 0] * np.sin(FTC.local_pos[robot_num, 1])) ** 2) < FTC.head_diameter ** 2):
+        if ((FTC.scandata[i, 2] - FTC.local_pos[robot_num, 0]) ** 2 + (FTC.scandata[i, 3] - FTC.local_pos[robot_num, 1]) ** 2) < (FTC.head_diameter ** 2):
           FTC.flag[i, robot_num] = 1
         else:
           FTC.flag[i, robot_num] = 0
       count = sum(FTC.flag[:, robot_num])
       if count > 3:
-        x_ = sum(FTC.scandata[:, 2] * FTC.flag[:, robot_num]) / count
-        y_ = sum(FTC.scandata[:, 3] * FTC.flag[:, robot_num]) / count
-        FTC.local_pos[robot_num, 0] = (x_ ** 2 + y_ ** 2) ** 0.5
-        FTC.local_pos[robot_num, 1] = math.atan2(y_, x_)
+        FTC.local_pos[robot_num, 0] = sum(FTC.scandata[:, 2] * FTC.flag[:, robot_num]) / count
+        FTC.local_pos[robot_num, 1] = sum(FTC.scandata[:, 3] * FTC.flag[:, robot_num]) / count
         print("No." + str(FTC.my_number) + " to No." + str(robot_num) + "is Local coordinates now.")
       else:
         FTC.local_pos[robot_num, :] = FTC.tf_pos[robot_num, :]
@@ -97,8 +93,8 @@ def callback(data):
   a = []
   for robot_num in range(FTC.total_number_of_robots):
     b = Pose()
-    b.position.x = FTC.local_pos[robot_num, 0] * np.cos(FTC.local_pos[robot_num, 1])
-    b.position.y = FTC.local_pos[robot_num, 0] * np.sin(FTC.local_pos[robot_num, 1])
+    b.position.x = FTC.local_pos[robot_num, 0]
+    b.position.y = FTC.local_pos[robot_num, 1]
     a.append(b)
   FTC.array_array.poses = a
   FTC.pub_array.publish(FTC.array_array)
