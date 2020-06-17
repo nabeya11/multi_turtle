@@ -41,8 +41,10 @@ class FTC:
 def get_global_coordinates(robot_num):
   listener = tf.TransformListener()
   try:
-    listener.waitForTransform("tb3_%d/base_footprint" % FTC.my_number, "tb3_%d/base_footprint" % robot_num, rospy.Time(0), rospy.Duration(10.0))
-    (trans,rot) = listener.lookupTransform("tb3_%d/base_footprint" % FTC.my_number, "tb3_%d/base_footprint" % robot_num, rospy.Time(0))
+    listener.clear()
+    tfnow = rospy.Time(0)
+    listener.waitForTransform("tb3_%d/base_footprint" % FTC.my_number, "tb3_%d/base_footprint" % robot_num, tfnow, rospy.Duration(10.0))
+    (trans,rot) = listener.lookupTransform("tb3_%d/base_footprint" % FTC.my_number, "tb3_%d/base_footprint" % robot_num, tfnow)
     return trans[0], trans[1]
 
   except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException, tf2_ros.TransformException) as error:
@@ -103,7 +105,7 @@ def callback(data):
   FTC.pub_array.publish(FTC.array_array)
 
 def main_loop():
-  rate = rospy.Rate(10.0)
+  # rate = rospy.Rate(10.0)
 
   while not rospy.is_shutdown():
     for robot_num in range(FTC.total_number_of_robots):
@@ -111,7 +113,7 @@ def main_loop():
         #listen tf_position and keep
         FTC.tf_pos[robot_num, 0], FTC.tf_pos[robot_num, 1] = get_global_coordinates(robot_num)
 
-    rate.sleep()
+    # rate.sleep()
 
 if __name__ == '__main__':
   try:
