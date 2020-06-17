@@ -26,10 +26,13 @@ if __name__ == '__main__':
         # if cmd.linear.x > 0.15:
         #     cmd.linear.x = 0.15
         # cmd.angular.z = 0.5 * math.atan2(trans[1], trans[0])
+        limit_x = 0.15
 
         cmd.linear.x = 0.4 * trans[0]
-        if cmd.linear.x > 0.15:
-            cmd.linear.x = 0.15
+        if cmd.linear.x > limit_x:
+            cmd.linear.x = limit_x
+        if cmd.linear.x < -limit_x:
+            cmd.linear.x = -limit_x
 
         if trans[0] > 0:
             cmd.angular.z = 1.4 * trans[1]
@@ -37,7 +40,6 @@ if __name__ == '__main__':
             cmd.angular.z = -1.4 * trans[1]
 
         velocity_publisher.publish(cmd)
-        
+
 
         rate.sleep()
-        
