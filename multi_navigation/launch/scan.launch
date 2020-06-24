@@ -2,9 +2,11 @@
   <arg name="tb3_name" default="tb3_0"/>
 
   <group ns = "$(arg tb3_name)">
-    <node pkg="multi_navigation" name="detect_robots" type="detect_robots.py" output="screen">
+    <!-- <node pkg="multi_navigation" name="detect_robots" type="detect_robots.py" output="screen">
       <param name="turtlename" type="string" value="$(arg tb3_name)"/>
-    </node>
-
+    </node> -->
+    <node pkg="multi_navigation" name="listen_tf" type="listen_tf.py" output="screen"></node>
+      <param name="total_number" value="2"/>
+      <param name="my_number" value="0"/>
   </group>
 </launch>
