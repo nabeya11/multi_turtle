@@ -6,8 +6,12 @@
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(find multi_navigation)/maps/$(arg map_name).yaml"/>
 
+  <rosparam command="load" file="$(find multi_navigation)/config/params.yaml"/>
+
+  <node pkg="multi_navigation" name="set_initpos" type="set_initpos.py" output="screen"></node>
+
   <!-- rviz -->
-  <group if="$(arg open_rviz)"> 
+  <group if="$(arg open_rviz)">
     <node pkg="rviz" type="rviz" name="rviz" required="true"
         args="-d $(find multi_navigation)/rviz/move_to_goal.rviz"/>
   </group>
