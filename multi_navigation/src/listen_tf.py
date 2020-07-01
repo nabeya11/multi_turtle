@@ -19,6 +19,7 @@ class RobotInfo:
     self.total_number = rospy.get_param('/total_robotnumber')
     self.robot_list = rospy.get_param('/robot_list')
     self.curt_pos = PoseArray()
+    self.curt_pos.header.frame_id = self.my_name
 
     self.pub_array = rospy.Publisher('rel_polar_vector', PoseArray, queue_size=10)
 
@@ -26,15 +27,18 @@ class RobotInfo:
     self.curt_pos.poses[:]=[]
     for target in self.robot_list:
       if target['name'] == self.my_name:
-        self.curt_pos.poses.append(0)
+        self.curt_pos.poses.append(Pose())
       else:
         self.curt_pos.poses.append(self.get_tf_pos(target['name']))
 
   def print_curtpos(self):
     for target in self.robot_list:
       print(target['name'])
-      print(self.curt_pos.poses[target['id']])
-    print("init print ended")
+      print(self.curt_pos.poses[target['id']].position)
+
+  def send_each_pos(self):
+    self.curt_pos.header.seq = rospy.Time.now()
+    self.pub_array.publish(self.curt_pos)
 
   def get_tf_pos(self, target_name):
     try:
@@ -51,33 +55,41 @@ class RobotInfo:
     except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException, tf2_ros.TransformException) as error:
       print(error)
 
-  def send_each_pos(self):
-    self.pub_array.publish(self.curt_pos)
+  def each_trace(self, target):
+    head_diameter = 0.15 / 2
+    flag = np.zeros(360)
+    pre_pos = self.curt_pos.poses[target['id']]
+    estimate_pos = Pose()
+    for rect in range(360):
+      if ((self.scan_data.x[rect] - pre_pos.position.x) ** 2 + (self.scan_data.y[rect] - pre_pos.position.y) ** 2) < (head_diameter ** 2):
+        flag[rect] = 1
+      else:
+        flag[rect] = 0
+      if self.scan_data.distance[rect] == float("inf"):
+        self.scan_data.x[rect] = 0
+        self.scan_data.y[rect] = 0
 
-  # def trace(self, pre_pos):
-  #   head_diameter = 0.15 / 2
-  #   flag = np.zeros(360)
-  #   for rect in range(360):
-  #     if ((self.scan_data.x[rect] - pre_pos.position.x) ** 2 + (self.scan_data.y[rect] - pre_pos.position.y) ** 2) < (head_diameter ** 2):
-  #       flag[rect] = 1
-  #     else:
-  #       flag[rect] = 0
-  #     if self.scan_data.distance[rect] == float("inf"):
-  #       self.scan_data.x[rect] = 0
-  #       self.scan_data.y[rect] = 0
+    count = sum(flag[:])
 
-  #   count = sum(flag[:])
+    if count > 3:
+      estimate_pos.position.x = sum(self.scan_data.x[:] * flag[:]) / count
+      estimate_pos.position.y = sum(self.scan_data.y[:] * flag[:]) / count
+      # print("No." + str(FTC.my_number) + " to No." + str(robot_info) + "is Local coordinates now.")
+      print("use Local")
+    else:
+      estimate_pos = self.get_tf_pos(target['name'])
+      print("use Global")
 
-  #   if count > 3:
-  #     self.curt_pos.position.x = sum(self.scan_data.x[:] * flag[:]) / count
-  #     self.curt_pos.position.y = sum(self.scan_data.y[:] * flag[:]) / count
-  #     # print("No." + str(FTC.my_number) + " to No." + str(robot_info) + "is Local coordinates now.")
-  #     print("use Local coordinates now.")
-  #   else:
-  #     self.curt_pos = self.get_tf_pos()
-  #     print("use Global coordinates now.")
+    return estimate_pos
 
-  #   return self.curt_pos
+  def trace(self):
+    for target in self.robot_list:
+      if target['name'] == self.my_name:
+        continue
+      else:
+        self.curt_pos.poses[target['id']] = self.each_trace(target)
+
+    self.send_each_pos()
 
 class ScanData:
   def __init__(self):
@@ -95,6 +107,7 @@ class ScanData:
 
 def main():
   robot_info = RobotInfo()
+  r = rospy.Rate(60)
 
   print("My number is " + robot_info.my_name)
 
@@ -102,15 +115,14 @@ def main():
   for i in range(3):
     robot_info.get_init_pos()
   robot_info.print_curtpos()
+  print("init print ended")
 
   while not rospy.is_shutdown():
-    # for target in robot_info.robot_list:
-    #   if target['name'] == robot_info.my_name:
-    #     continue
-    #   else:
-    #     scan_data.trace(target, curt_pos.poses[target['id']])
+    robot_info.trace()
+    robot_info.print_curtpos()
 
-    print(robot_info.get_tf_pos('tb3_1'))
+    r.sleep()
+    # print(robot_info.get_tf_pos('tb3_1'))
 
 if __name__ == '__main__':
   try:
