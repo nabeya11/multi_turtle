@@ -6,6 +6,7 @@
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(find multi_navigation)/maps/$(arg map_name).yaml"/>
 
+  <!-- publish each robot's initial position -->
   <rosparam command="load" file="$(find multi_navigation)/config/params.yaml"/>
 
   <node pkg="multi_navigation" name="set_initpos" type="set_initpos.py" output="screen"></node>
