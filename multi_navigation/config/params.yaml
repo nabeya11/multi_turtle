@@ -6,6 +6,3 @@ robot_list:
   - name: tb3_1
     id: 1
     init_pos: [3.0, 2.0, 0.0]
-  - name: tb3_2
-    id: 2
-    init_pos: [2.0, 2.0, 0.0]

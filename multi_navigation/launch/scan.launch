@@ -6,7 +6,6 @@
       <param name="turtlename" type="string" value="$(arg tb3_name)"/>
     </node> -->
     <node pkg="multi_navigation" name="listen_tf" type="listen_tf.py" output="screen"></node>
-      <param name="total_number" value="2"/>
-      <param name="my_number" value="0"/>
+      <param name="tb3_name" type = "str" value="$(arg tb3_name)"/>
   </group>
 </launch>
