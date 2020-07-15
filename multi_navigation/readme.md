@@ -10,7 +10,7 @@ These programs can move turtlebot3 while avoiding others when destination is set
 1. 実機をセットアップまたはシミュレーションを起動
 1. 必要なプログラムを起動
 
-ただし、事前にロボットを動かす環境の壁データ(以下mapfile)が必要.mapfile作成方法は別途記載
+ただし、事前にロボットを動かす環境の壁データ(以下mapfile)が必要.mapfile作成方法は別途記載(予定)
 
 basically, Follow the steps below
 1. start roscore by laptop(Hereinafter referred to as remotePC)
@@ -39,23 +39,25 @@ launch multi_sim_world.launch. Please edit this file to change number of robots 
 $ roslaunch multi_sim multi_sim_world.launch
 ```
 
-## map&rvizの起動 / launch map&rviz
-map_rviz.launchを起動する
-start map_rviz.launch
+## observerの起動 / launch observer
+observer.launchを起動する
+start observer.launch
 
 ex.
 ```bash
-$ roslaunch multi_navigation map_rviz.launch map_name:=realmap
+$ roslaunch multi_navigation observer.launch map_name:=realmap
 ```
 ### 役割 / description
-map_rviz.launchには以下の２つの役割がある
-map_rviz.launch has following two roles
+observer.launchには以下の２つの役割がある
+observer.launch has following two roles
 
 - map_server: mapfileの壁データを出力する
 - rviz: デバッグ用ソフト。各ノードから出る情報を視覚化するもの。シミュレーションシステムではない
+- set_initpos: 各ロボットの初期位置を設定する
 
 - map_server: output a walldata in the mapfile
 - rviz: for debug; vizualize data from each nodes. This is not a simulation system.
+- set_initpos: set initial position of each robot
 
 ### 引数 / parameters
 
@@ -65,7 +67,7 @@ map_rviz.launch has following two roles
 
 ## 目的地移動プログラムの立ち上げ / launch Move to destination program
 各ロボットごとにmove_to_goal.launch を起動する
-start map_rviz.launch for each robot
+start move_to_goal.launch for each robot
 
 ex.
 ```bash
@@ -79,10 +81,6 @@ put a vector of direction to move to point(x,y) enterd from the console
 ### 引数 / parameters
 - tb3_name: ロボット名
 - tb3_name: robot name
-
-- init_pose_x init_pose_y: ロボットの初期位置。 xが前進方向で右手系
-- init_pose_x init_pose_y:The robot's initial position. x is in the forward direction and right-handed
-
 
 ## ロボット・障害物検知の実行 / run detection of robot and obstacle
 各ロボットごとにscan.launch を起動する
@@ -106,8 +104,3 @@ output data is relative position from itself and posture(angle)
 ### 引数 / parameters
 - tb3_name: ロボット名
 - tb3_name: robot name
-
-### 注意 / attention
-このプログラムはよく停止する。未解決
-This program often stop unexpectedly unsolved
-
