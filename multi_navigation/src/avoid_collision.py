@@ -6,7 +6,7 @@ import numpy
 from geometry_msgs.msg import Twist
 from geometry_msgs.msg import Pose
 from geometry_msgs.msg import PoseArray
-from beginner.msg import polar_message
+from multi_navigation.msg import polar_message
 
 global tb3_name
 
