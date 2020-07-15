@@ -4,11 +4,8 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /TF1
         - /TF1/Frames1
         - /TF1/Tree1
-        - /LaserScan2
-        - /Goal1
       Splitter Ratio: 0.5251641273498535
     Tree Height: 794
   - Class: rviz/Selection
@@ -162,9 +159,91 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        base_footprint:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_scan:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        caster_back_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wheel_left_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wheel_right_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
       Name: RobotModel
       Robot Description: /tb3_2/robot_description
       TF Prefix: tb3_2
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Alpha: 1
+      Class: rviz/RobotModel
+      Collision Enabled: false
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        base_footprint:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_scan:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        caster_back_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wheel_left_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wheel_right_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Name: RobotModel
+      Robot Description: /tb3_3/robot_description
+      TF Prefix: tb3_3
       Update Interval: 0
       Value: true
       Visual Enabled: true
@@ -183,6 +262,8 @@ Visualization Manager:
           Value: false
         tb3_0/caster_back_link:
           Value: false
+        tb3_0/goal:
+          Value: true
         tb3_0/imu_link:
           Value: false
         tb3_0/odom:
@@ -207,6 +288,38 @@ Visualization Manager:
           Value: false
         tb3_1/wheel_right_link:
           Value: false
+        tb3_2/base_footprint:
+          Value: true
+        tb3_2/base_link:
+          Value: false
+        tb3_2/base_scan:
+          Value: false
+        tb3_2/caster_back_link:
+          Value: false
+        tb3_2/imu_link:
+          Value: false
+        tb3_2/odom:
+          Value: true
+        tb3_2/wheel_left_link:
+          Value: false
+        tb3_2/wheel_right_link:
+          Value: false
+        tb3_3/base_footprint:
+          Value: true
+        tb3_3/base_link:
+          Value: false
+        tb3_3/base_scan:
+          Value: false
+        tb3_3/caster_back_link:
+          Value: false
+        tb3_3/imu_link:
+          Value: false
+        tb3_3/odom:
+          Value: true
+        tb3_3/wheel_left_link:
+          Value: false
+        tb3_3/wheel_right_link:
+          Value: false
       Marker Scale: 1
       Name: TF
       Show Arrows: true
@@ -214,6 +327,8 @@ Visualization Manager:
       Show Names: false
       Tree:
         map:
+          tb3_0/goal:
+            {}
           tb3_0/odom:
             tb3_0/base_footprint:
               tb3_0/base_link:
@@ -239,6 +354,32 @@ Visualization Manager:
                 tb3_1/wheel_left_link:
                   {}
                 tb3_1/wheel_right_link:
+                  {}
+          tb3_2/odom:
+            tb3_2/base_footprint:
+              tb3_2/base_link:
+                tb3_2/base_scan:
+                  {}
+                tb3_2/caster_back_link:
+                  {}
+                tb3_2/imu_link:
+                  {}
+                tb3_2/wheel_left_link:
+                  {}
+                tb3_2/wheel_right_link:
+                  {}
+          tb3_3/odom:
+            tb3_3/base_footprint:
+              tb3_3/base_link:
+                tb3_3/base_scan:
+                  {}
+                tb3_3/caster_back_link:
+                  {}
+                tb3_3/imu_link:
+                  {}
+                tb3_3/wheel_left_link:
+                  {}
+                tb3_3/wheel_right_link:
                   {}
       Update Interval: 0
       Value: true
@@ -367,7 +508,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 12.358541488647461
+      Distance: 11.493986129760742
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -393,7 +534,7 @@ Window Geometry:
   Height: 1023
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd0000000400000000000001cb000003a5fc0200000006fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003d000003a5000000c900fffffffb0000000a0049006d0061006700650000000317000000cc0000000000000000fb0000000a0049006d0061006700650000000330000000ce00000000000000000000000100000100000003a5fc0200000004fb0000001e0054006f006f006c002000500072006f0070006500720074006900650073010000003d000000930000005c00fffffffb0000000a0056006900650077007301000000d60000030c000000a400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007301000002c0000001220000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004a00000003efc0100000002fb0000000800540069006d00650000000000000004a0000002eb00fffffffb0000000800540069006d0065010000000000000450000000000000000000000228000003a500000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000400000000000001d5000003a5fc0200000006fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003d000003a5000000c900fffffffb0000000a0049006d0061006700650000000317000000cc0000000000000000fb0000000a0049006d0061006700650000000330000000ce00000000000000000000000100000100000003a5fc0200000004fb0000001e0054006f006f006c002000500072006f0070006500720074006900650073010000003d000000930000005c00fffffffb0000000a0056006900650077007301000000d60000030c000000a400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007301000002c0000001220000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004a00000003efc0100000002fb0000000800540069006d00650000000000000004a0000002eb00fffffffb0000000800540069006d0065010000000000000450000000000000000000000281000003a500000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -402,6 +543,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1279
-  X: 4547
+  Width: 1378
+  X: 542
   Y: 27

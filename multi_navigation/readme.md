@@ -65,6 +65,30 @@ observer.launch has following two roles
 
 - map_name: mapfile to reference in `multi_navigation/maps`. not need the extention.
 
+## ロボット・障害物検知の実行 / run detection of robot and obstacle
+各ロボットごとにtb3_coresystem.launch を起動する
+start tb3_coresystem.launch for each robot
+
+ex.
+```bash
+$ roslaunch multi_navigation tb3_coresystem.launch tb3_name:=tb3_0
+```
+
+### 役割 / description
+相対位置からロボットを避ける動作を加える
+LiDARのscanデータから、ロボットを抽出し、追従する
+detect and follow robots from LiDAR scan data
+
+初期位置と見失った場合はグローバルデータを参照する。
+in initial and in case of losting robot, it refer to the global data
+
+出力するデータは、自身からの相対位置及び姿勢(角度)
+output data is relative position from itself and posture(angle)
+
+### 引数 / parameters
+- tb3_name: ロボット名
+- tb3_name: robot name
+
 ## 目的地移動プログラムの立ち上げ / launch Move to destination program
 各ロボットごとにmove_to_goal.launch を起動する
 start move_to_goal.launch for each robot
@@ -75,31 +99,7 @@ $ roslaunch multi_navigation move_to_goal.launch tb3_name:=tb3_0
 ```
 ### 役割 / description
 コンソールから入力された場所(x,y)に移動する方向のベクトルを出す
-また、後述するscan.launchから与えられるロボット位置からロボットを避ける動作を試みる
 put a vector of direction to move to point(x,y) enterd from the console
-
-### 引数 / parameters
-- tb3_name: ロボット名
-- tb3_name: robot name
-
-## ロボット・障害物検知の実行 / run detection of robot and obstacle
-各ロボットごとにscan.launch を起動する
-start scan.launch for each robot
-
-ex.
-```bash
-$ roslaunch multi_navigation scan.launch tb3_name:=tb3_0
-```
-
-### 役割 / description
-LiDARのscanデータから、ロボットを抽出し、追従する
-detect and follow robots from LiDAR scan data
-
-初期位置と見失った場合はグローバルデータを参照する。
-in initial and in case of losting robot, it refer to the global data
-
-出力するデータは、自身からの相対位置及び姿勢(角度)
-output data is relative position from itself and posture(angle)
 
 ### 引数 / parameters
 - tb3_name: ロボット名
