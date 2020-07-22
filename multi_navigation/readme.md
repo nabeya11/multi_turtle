@@ -10,6 +10,7 @@ These programs can move turtlebot3 while avoiding others when destination is set
 1. ノートパソコン(以下remotePC)からroscoreを起動する
 1. 実機をセットアップまたはシミュレーションを起動
 1. 必要なプログラムを起動
+1. オプションのプログラムや自作プログラムを起動
 
 ただし、事前にロボットを動かす環境の壁データ(以下mapfile)が必要.mapfile作成方法は別途記載(予定)
 
@@ -17,6 +18,7 @@ basically, Follow the steps below
 1. start roscore by laptop(Hereinafter referred to as remotePC)
 1. setup the real robots or launch simulation
 1. launch required programs
+1. launch option program or Homebrew program
 
 However, Wall data(Hereinafter referred to as mapfile) of the surroundings in which the robot moves is required in advance
 
@@ -33,7 +35,9 @@ $ roscore
 
 
 ### シミュレーションの場合 / in simulation
+
 multi_sim_world.launch を立ち上げる。ロボットの台数・初期位置はこのファイルをいじる。
+
 launch multi_sim_world.launch. Please edit this file to change number of robots or initial position of each robot.
 
 ```bash
@@ -42,6 +46,7 @@ $ roslaunch multi_sim multi_sim_world.launch
 
 ## observerの起動 / launch observer
 observer.launchを起動する
+
 start observer.launch
 
 ex.
@@ -50,6 +55,7 @@ $ roslaunch multi_navigation observer.launch map_name:=realmap
 ```
 ### 役割 / description
 observer.launchには以下の２つの役割がある
+
 observer.launch has following two roles
 
 - map_server: mapfileの壁データを出力する
@@ -66,8 +72,10 @@ observer.launch has following two roles
 
 - map_name: mapfile to reference in `multi_navigation/maps`. not need the extention.
 
-## ロボット・障害物検知の実行 / run detection of robot and obstacle
+## ロボットコアシステムの実行 / run robot coresysetm
+
 各ロボットごとにtb3_coresystem.launch を起動する
+
 start tb3_coresystem.launch for each robot
 
 ex.
@@ -76,31 +84,30 @@ $ roslaunch multi_navigation tb3_coresystem.launch tb3_name:=tb3_0
 ```
 
 ### 役割 / description
-相対位置からロボットを避ける動作を加える
-LiDARのscanデータから、ロボットを抽出し、追従する
-detect and follow robots from LiDAR scan data
 
+LiDARのscanデータから、ロボットを抽出し、その座標からロボットを避ける動作を加える。
 初期位置と見失った場合はグローバルデータを参照する。
-in initial and in case of losting robot, it refer to the global data
 
-出力するデータは、自身からの相対位置及び姿勢(角度)
-output data is relative position from itself and posture(angle)
+detect robots from LiDAR scan data
+in initial and in case of losting robot, it refer to the global data
 
 ### 引数 / parameters
 - tb3_name: ロボット名
+
 - tb3_name: robot name
 
-## 目的地移動プログラムの立ち上げ / launch Move to destination program
-各ロボットごとにmove_to_goal.launch を起動する
-start move_to_goal.launch for each robot
+
+## (オプション)位置制御プログラムの立ち上げ / (option)launch position control program
+各ロボットごとにposition_ctrl.launch を起動する
+start position_ctrl.launch for each robot
 
 ex.
 ```bash
 $ roslaunch multi_navigation move_to_goal.launch tb3_name:=tb3_0
 ```
 ### 役割 / description
-コンソールから入力された場所(x,y)に移動する方向のベクトルを出す
-put a vector of direction to move to point(x,y) enterd from the console
+コンソールから入力された場所(x,y)に移動する方向の速度ベクトルを出す
+put a Twist vector of direction to move to point(x,y) enterd from the console
 
 ### 引数 / parameters
 - tb3_name: ロボット名
