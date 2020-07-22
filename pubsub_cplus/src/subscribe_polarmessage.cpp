@@ -1,14 +1,16 @@
 //from http://wiki.ros.org/ja/ROS/Tutorials/WritingPublisherSubscriber
 
 #include "ros/ros.h"
-#include "multi_navigation/polar_message.h"
+#include "geometry_msgs/PoseArray.h"
 
 /**
  * This tutorial demonstrates simple receipt of messages over the ROS system.
  */
-void chatterCallback(const multi_navigation::float64::ConstPtr& msg)
+void chatterCallback(const geometry_msgs::PoseArray& msg)
 {
-  ROS_INFO("I heard: [%s]", msg->data.c_str());
+  for(int i=0; i<4; i++){
+    ROS_INFO("tb3_%dx: %f", i, msg.poses[i].position.x);
+  }
 }
 
 int main(int argc, char **argv)
@@ -23,7 +25,7 @@ int main(int argc, char **argv)
    * You must call one of the versions of ros::init() before using any other
    * part of the ROS system.
    */
-  ros::init(argc, argv, "listener");
+  ros::init(argc, argv, "subscribe_polarmessage");
 
   /**
    * NodeHandle is the main access point to communications with the ROS system.

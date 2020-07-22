@@ -17,7 +17,7 @@ int main(int argc, char **argv)
    * You must call one of the versions of ros::init() before using any other
    * part of the ROS system.
    */
-  ros::init(argc, argv, "talker");
+  ros::init(argc, argv, "destination_publisher");
 
   /**
    * NodeHandle is the main access point to communications with the ROS system.
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
     geometry_msgs::Twist msg;
 
     msg.linear.x=0;
-    msg.anglar.z=0;
+    msg.angular.z=0;
 
     ROS_INFO("%f", msg.linear.x);
 
