@@ -1,0 +1,1 @@
+rosbag record -e "/tb3_./(avoidance_component|destination_component|cmd_vel|rel_polar_vector|scan)|/tf"
