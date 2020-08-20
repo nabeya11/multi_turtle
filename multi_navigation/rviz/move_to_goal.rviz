@@ -6,6 +6,7 @@ Panels:
       Expanded:
         - /TF1/Frames1
         - /TF1/Tree1
+        - /TFTrajectory1
       Splitter Ratio: 0.5251641273498535
     Tree Height: 794
   - Class: rviz/Selection
@@ -484,6 +485,14 @@ Visualization Manager:
       Topic: /goal
       Unreliable: false
       Value: true
+    - Class: jsk_rviz_plugin/TFTrajectory
+      Enabled: true
+      Name: TFTrajectory
+      Value: true
+      color: 25; 255; 240
+      duration: 100
+      frame: tb3_0/base_footprint
+      line_width: 0.009999999776482582
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
