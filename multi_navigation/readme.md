@@ -103,7 +103,7 @@ start position_ctrl.launch for each robot
 
 ex.
 ```bash
-$ roslaunch multi_navigation move_to_goal.launch tb3_name:=tb3_0
+$ roslaunch multi_navigation position_ctrl.launch tb3_name:=tb3_0
 ```
 ### 役割 / description
 コンソールから入力された場所(x,y)に移動する方向の速度ベクトルを出す
