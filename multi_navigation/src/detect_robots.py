@@ -56,7 +56,7 @@ class RobotInfo:
       print(error)
 
   def each_trace(self, target):
-    head_diameter = 0.15 / 2
+    head_diameter = 0.3 / 2
     flag = np.zeros(360)
     pre_pos = self.curt_pos.poses[target['id']]
     estimate_pos = Pose()

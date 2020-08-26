@@ -23,7 +23,7 @@ def vel_publisher(comp):
     global twist_avoidance
     compvel_publisher = rospy.Publisher('cmd_vel', Twist, queue_size=10)
     if numpy.sign(twist_avoidance.linear.x) != numpy.sign(comp.linear.x):
-        comp.linear.x += twist_avoidance.linear.x
+        comp.linear.x *= 1.0 - abs(twist_avoidance.linear.x)
         comp.angular.z += twist_avoidance.angular.z
     print twist_avoidance
     # print(twist_avoidance.linear.x)

@@ -35,8 +35,8 @@ def avoid_publisher(posearray):
     # r = math.sqrt(pose.position.x ** 2 + pose.position.y ** 2)
     # theta = math.atan2(pose.position.y , pose.position.x )
     vel_msg = Twist()
-    radius = 0.7
-    x_limit = 0.05
+    radius = 0.8
+    x_limit = 1.0
     rot_limit = 0.6
     if r < radius :
         vel_msg.linear.x = -x_limit * (radius - r)  * math.cos(theta)
