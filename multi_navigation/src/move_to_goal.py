@@ -27,17 +27,26 @@ if __name__ == '__main__':
         #     cmd.linear.x = 0.15
         # cmd.angular.z = 0.5 * math.atan2(trans[1], trans[0])
         limit_x = 0.15
+        limit_acc_x = 0.01
 
-        cmd.linear.x = 0.4 * trans[0]
+        next_x = 0.4 * trans[0]
+        if next_x - cmd.linear.x > limit_acc_x :
+            cmd.linear.x += limit_acc_x
+        elif cmd.linear.x - next_x > limit_acc_x :
+            cmd.linear.x -= limit_acc_x
+        else:
+            cmd.linear.x = next_x
+
+        # cmd.linear.x = 0.4 * trans[0]
         if cmd.linear.x > limit_x:
             cmd.linear.x = limit_x
         if cmd.linear.x < -limit_x:
             cmd.linear.x = -limit_x
 
         if trans[0] > 0:
-            cmd.angular.z = 1.4 * trans[1]
+            cmd.angular.z = 1.0 * trans[1]
         else:
-            cmd.angular.z = -1.4 * trans[1]
+            cmd.angular.z = -1.0 * trans[1]
 
         velocity_publisher.publish(cmd)
 
