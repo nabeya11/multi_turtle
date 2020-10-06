@@ -1,4 +1,4 @@
-total_robotnumber: 2
+total_robotnumber: 4
 robot_list:
   - name: tb3_0
     id: 0
@@ -10,5 +10,5 @@ robot_list:
     id: 2
     init_pos: [2.0, 3.0, 0.0]
   - name: tb3_3
-    id: 2
+    id: 3
     init_pos: [1.0, 3.0, 0.0]
