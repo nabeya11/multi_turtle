@@ -1,14 +1,17 @@
-total_robotnumber: 4
 robot_list:
   - name: tb3_0
     id: 0
+    enable: true
     init_pos: [1.0, 2.0, 0.0]
   - name: tb3_1
     id: 1
+    enable: true
     init_pos: [3.0, 2.0, 0.0]
   - name: tb3_2
     id: 2
+    enable: true
     init_pos: [2.0, 3.0, 0.0]
   - name: tb3_3
     id: 3
+    enable: true
     init_pos: [1.0, 3.0, 0.0]

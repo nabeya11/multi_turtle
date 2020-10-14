@@ -16,7 +16,6 @@ class RobotInfo:
     self.scan_data = ScanData()
 
     # others' info
-    self.total_number = rospy.get_param('/total_robotnumber')
     self.robot_list = rospy.get_param('/robot_list')
     self.curt_pos = PoseArray()
     self.curt_pos.header.frame_id = self.my_name

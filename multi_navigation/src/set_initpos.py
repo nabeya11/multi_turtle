@@ -7,7 +7,6 @@ if __name__ == '__main__':
   try:
     rospy.init_node('set_initpos', anonymous=True)
 
-    total_number = rospy.get_param('total_robotnumber')
     robot_list = rospy.get_param('robot_list')
 
     print("follow are the names of robot which is set initpos")
