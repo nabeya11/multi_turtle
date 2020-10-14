@@ -25,15 +25,16 @@ class RobotInfo:
   def get_init_pos(self):
     self.curt_pos.poses[:]=[]
     for target in self.robot_list:
-      if target['name'] == self.my_name:
+      if target['name'] == self.my_name or not target['enable']:
         self.curt_pos.poses.append(Pose())
       else:
         self.curt_pos.poses.append(self.get_tf_pos(target['name']))
 
   def print_curtpos(self):
     for target in self.robot_list:
-      print(target['name'])
-      print(self.curt_pos.poses[target['id']].position)
+      if not target['enable']:
+        print(target['name'])
+        print(self.curt_pos.poses[target['id']].position)
 
   def send_each_pos(self):
     self.curt_pos.header.seq = rospy.Time.now()
@@ -83,7 +84,7 @@ class RobotInfo:
 
   def trace(self):
     for target in self.robot_list:
-      if target['name'] == self.my_name:
+      if target['name'] == self.my_name or not target['enable']:
         continue
       else:
         self.curt_pos.poses[target['id']] = self.each_trace(target)
