@@ -1,5 +1,9 @@
 # multi turtle
 
+<img src="https://img.shields.io/badge/-Ubuntu-6F52B5.svg?logo=ubuntu&style=flat">
+<img src="https://img.shields.io/badge/Ubuntu-18.04-purple?logo=ubuntu&style=flat">
+<img src="https://img.shields.io/badge/ROS-melodic-brightgreen">
+
 これは、Turtlebot3を複数台動かすためのソースです。
 必ず、各ドキュメントを読んでください
 
