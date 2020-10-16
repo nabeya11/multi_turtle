@@ -19,16 +19,17 @@ def relative_subscriber():
 
 def avoid_publisher(posearray):
     global tb3_name
+    robot_list = rospy.get_param('/robot_list')
     vel_avoid_publisher = rospy.Publisher('avoidance_component',Twist,queue_size = 10)
     # rate = rospy.Rate(5)
 
     #一番近いやつだけ避ける
     rlist = [10] * len(posearray.poses)
     thetalist = [0] * len(posearray.poses)
-    for i in range(len(posearray.poses) ):
-        if tb3_name != "tb3_%d" % i:
-            rlist[i] = math.sqrt(posearray.poses[i].position.x ** 2 + posearray.poses[i].position.y ** 2)
-            thetalist[i] = math.atan2(posearray.poses[i].position.y , posearray.poses[i].position.x )
+    for robot_info in robot_list:
+        if tb3_name != robot_info['name'] and robot_info['enable']:
+            rlist[robot_info['id']] = math.sqrt(posearray.poses[robot_info['id']].position.x ** 2 + posearray.poses[robot_info['id']].position.y ** 2)
+            thetalist[robot_info['id']] = math.atan2(posearray.poses[robot_info['id']].position.y , posearray.poses[robot_info['id']].position.x )
     r = min(rlist)
     theta = thetalist[rlist.index(r)]
 
