@@ -11,7 +11,7 @@ if __name__ == '__main__':
 
     print("follow are the names of robot which is set initpos")
     for robot_info in robot_list:
-      if not target['enable']:
+      if robot_info['enable']:
         print(robot_info['name'])
         pub = rospy.Publisher(robot_info['name']+'/initialpose', PoseWithCovarianceStamped, queue_size=0, latch=True)
         initpos = PoseWithCovarianceStamped()

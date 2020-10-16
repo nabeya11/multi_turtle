@@ -32,7 +32,7 @@ class RobotInfo:
 
   def print_curtpos(self):
     for target in self.robot_list:
-      if not target['enable']:
+      if target['enable']:
         print(target['name'])
         print(self.curt_pos.poses[target['id']].position)
 
@@ -84,12 +84,12 @@ class RobotInfo:
 
   def trace(self):
     for target in self.robot_list:
-      if target['name'] == self.my_name or not target['enable']:
-        continue
-      else:
-        self.curt_pos.poses[target['id']] = self.each_trace(target)
-
-    self.send_each_pos()
+      if target['enable']:
+        if target['name'] == self.my_name:
+          continue
+        else:
+          self.curt_pos.poses[target['id']] = self.each_trace(target)
+        self.send_each_pos()
 
 class ScanData:
   def __init__(self):
