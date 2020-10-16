@@ -11,18 +11,11 @@
     <arg name="debug" value="false"/>
   </include>
 
-  <group ns = "$(arg tb3_name)">
-    <rosparam command="load" file="$(find multi_navigation)/config/params.yaml"/>
-    <param name="robot_desc" value="$(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+  <rosparam command="load" file="$(find multi_navigation)/config/params.yaml"/>
+  <param name="robot_description" value="$(find multi_sim)/urdf/turtlebot3_$(arg model).urdf" />
 
-    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
-      <param name="publish_frequency" type="double" value="50.0" />
-      <param name="tf_prefix" value="$(arg tb3_name)" />
-    </node>
-
-    <node name="spawn" pkg="multi_sim" type="spawn.py" output="screen">
-      <param name="tb3_name" type = "str" value="$(arg tb3_name)"/>
-    </node>
-  </group>
+  <node name="spawn" pkg="multi_sim" type="spawn.py">
+    <param name="tb3_name" type = "str" value="$(arg tb3_name)"/>
+  </node>
 
 </launch>
