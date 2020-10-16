@@ -9,7 +9,7 @@ robot_list:
     init_pos: [3.0, 2.0, 0.0]
   - name: tb3_2
     id: 2
-    enable: true
+    enable: false
     init_pos: [2.0, 3.0, 0.0]
   - name: tb3_3
     id: 3

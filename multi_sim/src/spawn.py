@@ -12,16 +12,17 @@ if __name__ == '__main__':
 
     init_pose = Pose()
     for robot_info in robot_list:
-        init_pose.position.x = robot_info['init_pos'][0]
-        init_pose.position.y = robot_info['init_pos'][1]
-        init_pose.orientation.z = robot_info['init_pos'][2]
+        if robot_info['enable']:
+            init_pose.position.x = robot_info['init_pos'][0]
+            init_pose.position.y = robot_info['init_pos'][1]
+            init_pose.orientation.z = robot_info['init_pos'][2]
 
-        rospy.wait_for_service('/gazebo/spawn_urdf_model')
-        spawn_model_client = rospy.ServiceProxy('/gazebo/spawn_urdf_model', SpawnModel)
-        spawn_model_client(
-            model_name = robot_info['name'],
-            model_xml = open(robot_description, 'r').read(),
-            robot_namespace = robot_info['name'],
-            initial_pose = init_pose,
-            reference_frame='world'
-        )
+            rospy.wait_for_service('/gazebo/spawn_urdf_model')
+            spawn_model_client = rospy.ServiceProxy('/gazebo/spawn_urdf_model', SpawnModel)
+            spawn_model_client(
+                model_name = robot_info['name'],
+                model_xml = open(robot_description, 'r').read(),
+                robot_namespace = robot_info['name'],
+                initial_pose = init_pose,
+                reference_frame='world'
+            )
