@@ -59,4 +59,7 @@ export ROS_MASTER_URI=http://localhost:11311
 export ROS_HOSTNAME=$HOSTNAME.local
 
 export TURTLEBOT3_MODEL=burger
+
+export ROSLAUNCH_SSH_UNKNOWN=1
 ```
+catkin_create_pkg package_name rospy std_msgs geometry_msgs tf
