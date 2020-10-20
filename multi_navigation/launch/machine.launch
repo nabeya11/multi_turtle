@@ -1,0 +1,15 @@
+<launch>
+
+  <arg name="user" default="$(env USER)" />
+
+  <machine name="sub" address="raspi-C.local" user="turtle-c" password="gazebo" env-loader="~/catkin_ws/src/multi_tb3/env/machine2.sh" />
+
+  <!-- <node pkg="mypkg" type="node.py" name="main_node">
+    <param name="myparam" value="hello main" />
+  </node> -->
+
+  <node pkg="multi_tb3" type="node.py" name="sub_node" machine="sub" output="screen">
+    <param name="myparam" value="hello sub" />
+  </node>
+
+</launch>
