@@ -6,6 +6,16 @@
   <arg name="tb3_name" default="tb3_0"/>
 
   <group ns = "$(arg tb3_name)">
+    <include file="$(find turtlebot3_bringup)/launch/includes/description.launch.xml">
+      <arg name="model" value="$(arg model)" />
+    </include>
+
+    <!-- launch state publisher -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="$(arg tb3_name)" />
+    </node>
+
     <!-- Gmapping -->
     <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="log">
       <param name="base_frame" value="$(arg tb3_name)/base_footprint"/>
@@ -47,7 +57,7 @@
   </group>
 
   <!-- rviz -->
-  <group if="$(arg open_rviz)"> 
+  <group if="$(arg open_rviz)">
     <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find multi_navigation)/rviz/turtlebot3_slam.rviz"/>
   </group>
 </launch>
