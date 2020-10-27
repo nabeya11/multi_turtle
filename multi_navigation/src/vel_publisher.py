@@ -17,7 +17,7 @@ def destination_subscriber():
     rospy.Subscriber('destination_component', Twist, vel_publisher)
     rospy.Subscriber('avoidance_component', Twist, avoidcallback)
     compvel_publisher = rospy.Publisher('cmd_vel', Twist, queue_size=10)
-    rate = rospy.Rate(100.0)
+    rate = rospy.Rate(10.0)
     zerovel = Twist()
     zerovel.linear.x = 0.0
     zerovel.angular.z = 0.0

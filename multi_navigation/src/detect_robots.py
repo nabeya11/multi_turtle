@@ -107,7 +107,7 @@ class ScanData:
 
 def main():
   robot_info = RobotInfo()
-  r = rospy.Rate(200)
+  r = rospy.Rate(60)
 
   print("My number is " + robot_info.my_name)
 
