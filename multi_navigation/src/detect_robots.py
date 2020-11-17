@@ -42,11 +42,10 @@ class RobotInfo:
 
   def get_tf_pos(self, target_name):
     try:
-      self.listener.clear()
       pos = Pose()
       tfnow = rospy.Time(0)
-      self.listener.waitForTransform("{}/base_footprint".format(self.my_name), target_name + "/base_footprint", tfnow, rospy.Duration(10.0))
-      (trans,rot) = self.listener.lookupTransform("{}/base_footprint".format(self.my_name), target_name + "/base_footprint", tfnow)
+      self.listener.waitForTransform(self.my_name + "/base_footprint", target_name + "/base_footprint", tfnow, rospy.Duration(10.0))
+      (trans,rot) = self.listener.lookupTransform(self.my_name + "/base_footprint", target_name + "/base_footprint", tfnow)
       pos.position.x = trans[0]
       pos.position.y = trans[1]
 
@@ -74,7 +73,6 @@ class RobotInfo:
     if count > 3:
       estimate_pos.position.x = sum(self.scan_data.x[:] * flag[:]) / count
       estimate_pos.position.y = sum(self.scan_data.y[:] * flag[:]) / count
-      # print("No." + str(FTC.my_number) + " to No." + str(robot_info) + "is Local coordinates now.")
       print("use Local")
     else:
       estimate_pos = self.get_tf_pos(target['name'])
