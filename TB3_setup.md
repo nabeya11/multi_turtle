@@ -101,6 +101,8 @@ export TURTLEBOT3_MODEL=burger
 
 ## ssh
 
+デフォルトでインストールされているはずだが壊れているので次の操作で再インストールを行う
+
 ```bash
 $ sudo apt purge openssh-server
 $ sudo apt install openssh-server
@@ -138,5 +140,5 @@ PC
 ```bash
 $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
-WASDXで動けばOK
+WASDXキーで動けばOK
 turtlebotの「前」はタイヤ(駆動輪)がある方
