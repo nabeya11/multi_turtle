@@ -96,8 +96,8 @@ nano ~/.bashrc
 ```bash
 export ROS_MASTER_URI=http://ROS-PC.local:11311
 export ROS_HOSTNAME=$HOSTNAME.local
-```
 export TURTLEBOT3_MODEL=burger
+```
 
 ## ssh
 
