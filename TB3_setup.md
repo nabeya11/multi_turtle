@@ -15,6 +15,7 @@ https://www.raspberrypi.org/downloads/
 
 以下の命名規則を定めているつもり
 
+- あなたの名前:turtle-X (xは小文字アルファベットで他機体に割り当てられてないもの、今後に影響はない)
 - デバイス名:raspi-X  (Xは大文字アルファベットで他機体に割り当てられてないもの)
 - ユーザー名:turtle-x (xは小文字アルファベットで他機体に割り当てられてないもの)
 
@@ -22,8 +23,25 @@ Xとxは同じアルファベット
 
 パスワードは "gazebo" で統一している
 
+起動したらコンソールを開いて(ctrl+alt+T)
 
+```bash
+$ sudo apt update && sudo apt upgrade -y
+```
+注：この処理が重たすぎて完全に止まることがある
 
+処理が終わったら絶対reboot
+
+## ssh
+
+ディスプレイをつながず、PCから今後のセットアップを行いたい場合に使うssh
+ssh自体についてはggr
+デフォルトでインストールされているはずだが壊れていることがあるので次の操作で再インストールを行う
+
+```bash
+$ sudo apt purge openssh-server
+$ sudo apt install openssh-server
+```
 
 ## ROS melodic のインストール
 
@@ -94,19 +112,33 @@ nano ~/.bashrc
 最終行に以下を追加
 
 ```bash
+source ~/catkin_ws/devel/setup.bash
+
 export ROS_MASTER_URI=http://ROS-PC.local:11311
 export ROS_HOSTNAME=$HOSTNAME.local
 export TURTLEBOT3_MODEL=burger
 ```
 
-## ssh
+## 画面解像度の修正(必要があれば)
 
-デフォルトでインストールされているはずだが壊れているので次の操作で再インストールを行う
+場合によっては画面が粗くて、ウィンドウのOKボタンが押せないことがある
+その時は解像度設定を変える
 
 ```bash
-$ sudo apt purge openssh-server
-$ sudo apt install openssh-server
+$ sudo nano /boot/config.txt
 ```
+で編集する
+```
+hdmi_group=2    # DMT
+hdmi_mode=82	# 1920x1080 60Hz
+```
+で保存(ctrl+s)してnanoを終了(ctrl+x)、再起動(reboot)
+起動時の文字が小さくなって全体的にこまやかになればOK
+
+参考
+https://note.com/mokuichi/n/n709037d0a32a
+https://www.raspberrypi.org/forums/viewtopic.php?f=5&t=5851
+
 ## 動作チェック
 
 roscoreの起動
