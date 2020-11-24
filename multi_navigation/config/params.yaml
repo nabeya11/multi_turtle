@@ -13,5 +13,5 @@ robot_list:
     init_pos: [2.0, 3.0, 0.0]
   - name: tb3_3
     id: 3
-    enable: true
+    enable: false
     init_pos: [1.0, 3.0, 0.0]

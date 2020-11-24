@@ -25,8 +25,9 @@
     </include>
 
     <!-- detect robot local positions -->
-    <node pkg="multi_navigation" name="detect_robots" type="detect_robots.py" output="screen" respawn="true"></node>
+    <node pkg="multi_navigation" name="detect_robots" type="detect_robots.py" output="screen" respawn="true">
       <param name="tb3_name" type = "str" value="$(arg tb3_name)"/>
+    </node>
 
     <!-- avoid -->
     <node pkg="multi_navigation" name="avoid_collision" type="avoid_collision.py">

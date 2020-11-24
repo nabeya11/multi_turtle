@@ -6,7 +6,7 @@ from geometry_msgs.msg import TransformStamped
 
 if __name__ == '__main__':
     try:
-        rospy.init_node('turtle_tf_broadcaster')
+        rospy.init_node('tb3_goal_broadcaster')
         tb3_name = rospy.get_param('tb3_name')
         r = rospy.Rate(60)
 

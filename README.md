@@ -11,19 +11,19 @@
 
 ドキュメントは以下の通りです。
 
-### create_package.md
-
-制御器のプログラムの作成方法です。
-
-### multi_navigation/readme.md
+### [use_multi_tools.md](use_multi_tools.md)
 
 このツールの起動方法、使い方を記しています。
 
-### PC_setup.md
+### [create_package.md](create_package.md)
+
+制御器のプログラムの作成方法です。
+
+### [PC_setup.md](PC_setup.md)
 
 PC環境のセットアップ方法を記載しています
 
-### TB3_setup.md
+### [TB3_setup.md](TB3_setup.md)
 
 turtlebot3のラズパイのセットアップ方法が記されています
 
@@ -33,7 +33,7 @@ turtlebot3のラズパイのセットアップ方法が記されています
 
 ### multi_navigation
 
-turtlebot3に他のロボットを避けながら移動させるパッケージです。また、目的地を指定しての移動も可能である。
+turtlebot3に他のロボットを避けながら移動させるパッケージです。また、目的地を指定しての移動も可能です。
 
 ### multi_sim
 
