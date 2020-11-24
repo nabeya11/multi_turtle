@@ -118,6 +118,7 @@ export ROS_MASTER_URI=http://ROS-PC.local:11311
 export ROS_HOSTNAME=$HOSTNAME.local
 export TURTLEBOT3_MODEL=burger
 ```
+export TURTLEBOT3_MODEL=burger
 
 ## 画面解像度の修正(必要があれば)
 
