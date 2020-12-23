@@ -2,6 +2,8 @@
   <!-- Arguments -->
   <arg name="tb3_name"  default="tb3_0"/>
   <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="use_avoid"  default="true"/>
+
   <rosparam command="load" file="$(find multi_navigation)/config/params.yaml"/>
 
   <remap from="/$(arg tb3_name)/map" to="/map"/>
@@ -29,12 +31,13 @@
       <param name="tb3_name" type = "str" value="$(arg tb3_name)"/>
     </node>
 
-    <!-- avoid -->
-    <node pkg="multi_navigation" name="avoid_collision" type="avoid_collision.py">
-    </node>
+    <group if="$(arg use_avoid)">
+      <!-- avoid -->
+      <node pkg="multi_navigation" name="avoid_collision" type="avoid_collision.py"></node>
 
-    <!-- vel integrator -->
-    <node pkg="multi_navigation" name="vel_publisher" type="vel_publisher.py"></node>
+      <!-- vel integrator -->
+      <node pkg="multi_navigation" name="vel_publisher" type="vel_publisher.py"></node>
+    </group>
 
   </group>
 </launch>
