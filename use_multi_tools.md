@@ -22,6 +22,10 @@ basically, Follow the steps below
 
 However, Wall data(Hereinafter referred to as mapfile) of the surroundings in which the robot moves is required in advance
 
+## param.yamlの設定
+
+param.yamlで起動するロボットの台数と初期位置を設定する。
+
 ## roscoreの起動 / start roscore
 
 ```bash
@@ -32,7 +36,11 @@ $ roscore
 
 ### 実機の場合 / for real robot
 
+sshで各ロボットにつなぎ、named_robot.launchを立ち上げる。
 
+```bash
+$ roslaunch multi_tb3 turtlebot3_named_robot.launch tb3_name:=tb3_0
+```
 
 ### シミュレーションの場合 / in simulation
 
