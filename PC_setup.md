@@ -104,5 +104,3 @@ https://linux.just4fun.biz/?Ubuntu/Unable+to+acquire+the+dpkg+frontend+lock%E3%8
 ## memo
 
 ファイアウォール:ufwを使っている人は11311ポートをあけておく(allowする)こと
-
-catkin_create_pkg package_name rospy std_msgs geometry_msgs tf

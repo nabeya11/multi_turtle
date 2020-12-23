@@ -4,6 +4,10 @@
 
 MATEのイメージはここから落としてくる
 
+https://releases.ubuntu-mate.org/archived/bionic/arm64/
+
+.xzファイルをDLし、展開(ubuntuならばxzコマンドを利用)してimgにしておく
+
 研究室の三台のPCにはWindowsのダウンロードフォルダに入れてある
 
 SDカードに書き込むためのソフトはここの `Raspberry Pi Imager` をダウンロード＆インストールし、利用する
@@ -28,7 +32,7 @@ Xとxは同じアルファベット
 ```bash
 $ sudo apt update && sudo apt upgrade -y
 ```
-注：この処理が重たすぎて完全に止まることがある
+注：この処理が重たすぎて完全に止まることがある。その時は電源をつけ直して再度コマンドを打つ。また、errorが出るが気にしない。
 
 処理が終わったら絶対reboot
 
@@ -71,11 +75,16 @@ $ catkin_make
 ## Turtlebot3 のためのセットアップ
 
 Turtlebot3 のコードを落としてくる
+
+- Turtlebot3公式のコード 3種
+- OA自作のコード 1種
+
 ```bash
 $ cd ~/catkin_ws/src
 $ git clone https://github.com/ROBOTIS-GIT/hls_lfcd_lds_driver.git
 $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
 $ git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
+$ git clone https://github.com/nabeya11/multi_tb3.git
 ```
 必要ないものを削除
 ```bash
@@ -91,18 +100,13 @@ $ sudo apt install ros-melodic-rosserial-python ros-melodic-tf
 $ cd ~/catkin_ws && catkin_make -j1
 ```
 
--j1は使用するコア数。メモリ使用量を抑えるためにひとつだけを指定(コンパイルが途中で止まることあり)
+-j1は使用するコア数。メモリ使用量を抑えるためにひとつだけを指定(コンパイルが途中で止まることあるため)
 
 ## USBのセットアップ
 
 ```bash
-$ roscore
-```
-新しく別の端末を開き
-```bash
 $ rosrun turtlebot3_bringup create_udev_rules
 ```
-後者が終了すれば、roscore側もctrl+cでストップ
 OpenCRの右から２つめのオレンジのLEDの点滅が発生しなくなるまで待つ
 
 ## network config
@@ -118,7 +122,6 @@ export ROS_MASTER_URI=http://ROS-PC.local:11311
 export ROS_HOSTNAME=$HOSTNAME.local
 export TURTLEBOT3_MODEL=burger
 ```
-export TURTLEBOT3_MODEL=burger
 
 ## 画面解像度の修正(必要があれば)
 
@@ -175,3 +178,13 @@ $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
 WASDXキーで動けばOK
 turtlebotの「前」はタイヤ(駆動輪)がある方
+
+## chronyの導入
+
+時計同期を外部ネットワークがない状態でもホストPCから取得できるようにする。
+
+```bash
+$ sudo apt install chrony
+```
+
+`/etc/chrony.conf`をmulti_tb3内にあるファイルに置き換える

@@ -7,6 +7,9 @@
 これは、Turtlebot3を複数台動かすためのソースです。
 必ず、各ドキュメントを読んでください
 
+ローカルにあるやつは古い可能性があります。
+https://github.com/nabeya11/multi_turtle に最新版のドキュメントが上がっています。
+
 ## readable documents
 
 ドキュメントは以下の通りです。
