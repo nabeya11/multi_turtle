@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import rospy
+import tf
+import math
 from geometry_msgs.msg import PoseWithCovarianceStamped
 
 if __name__ == '__main__':
@@ -20,9 +22,16 @@ if __name__ == '__main__':
         initpos.header.frame_id = 'map'
         initpos.pose.pose.position.x = robot_info['init_pos'][0]
         initpos.pose.pose.position.y = robot_info['init_pos'][1]
-        initpos.pose.pose.orientation.z = robot_info['init_pos'][2]
-        initpos.pose.pose.orientation.w = 1
-        # initpos.pose.covariance = [0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.06853891945200942]
+        initpos.pose.pose.orientation.w = 1.0
+        initquat = tf.transformations.quaternion_from_euler(0, 0, robot_info['init_pos'][2])
+        initpos.pose.pose.orientation.x = initquat[0]
+        initpos.pose.pose.orientation.y = initquat[1]
+        initpos.pose.pose.orientation.z = initquat[2]
+        initpos.pose.pose.orientation.w = initquat[3]
+        print(initpos.pose.pose.orientation)
+        initpos.pose.covariance[6*0+0] = 0.5 * 0.5
+        initpos.pose.covariance[6*1+1] = 0.5 * 0.5
+        initpos.pose.covariance[6*5+5] = math.pi/12.0 * math.pi/12.0
 
         pub.publish(initpos)
 
