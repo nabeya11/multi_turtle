@@ -102,13 +102,6 @@ $ cd ~/catkin_ws && catkin_make -j1
 
 -j1は使用するコア数。メモリ使用量を抑えるためにひとつだけを指定(コンパイルが途中で止まることあるため)
 
-## USBのセットアップ
-
-```bash
-$ rosrun turtlebot3_bringup create_udev_rules
-```
-OpenCRの右から２つめのオレンジのLEDの点滅が発生しなくなるまで待つ
-
 ## network config
 
 nano ~/.bashrc
@@ -122,6 +115,17 @@ export ROS_MASTER_URI=http://ROS-PC.local:11311
 export ROS_HOSTNAME=$HOSTNAME.local
 export TURTLEBOT3_MODEL=burger
 ```
+ROS_MASTER_URIの`ROS-PC`部はroscoreを立ち上げるPCのデバイス名にする。
+出来たらctrl+sで保存、ctrl+xで終了
+
+`source ~/.bashrc`を実行するか、ターミナルを開き直すことでbashrcの変更を適用する。
+
+## USBのセットアップ
+
+```bash
+$ rosrun turtlebot3_bringup create_udev_rules
+```
+OpenCRの右から２つめのオレンジのLEDの点滅が発生しなくなるまで待つ
 
 ## 画面解像度の修正(必要があれば)
 
@@ -188,3 +192,4 @@ $ sudo apt install chrony
 ```
 
 `/etc/chrony.conf`をmulti_tb3内にあるファイルに置き換える
+(multi_tb3内にあるファイルを`/etc/chrony.conf`へ上書きコピーする)
