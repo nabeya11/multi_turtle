@@ -120,6 +120,29 @@ ROS_MASTER_URIの`ROS-PC`部はroscoreを立ち上げるPCのデバイス名に�
 
 `source ~/.bashrc`を実行するか、ターミナルを開き直すことでbashrcの変更を適用する。
 
+## OpenCRのセットアップ
+
+OpenCRとは下の段にある基板のこと
+以下 https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup/#opencr-setup のコピー
+
+``` bash
+$ sudo dpkg --add-architecture armhf
+$ sudo apt-get update
+$ sudo apt-get install libc6:armhf
+$ export OPENCR_PORT=/dev/ttyACM0
+$ export OPENCR_MODEL=burger
+$ rm -rf ./opencr_update.tar.bz2
+$ wget https://github.com/ROBOTIS-GIT/OpenCR-Binaries/raw/master/turtlebot3/ROS1/latest/opencr_update.tar.bz2
+$ tar -xvf opencr_update.tar.bz2
+$ cd ./opencr_update
+$ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr
+```
+
+最後の結果がOKではなくfailed等になった場合は失敗しているので、何か間違っていないか確認する
+例えばttyACM0は オーではなくゼロ
+
+最終的に基板の端から二つ目の緑のLED(STATUSランプ)が点滅、POWER以外のLEDが消灯していればOK
+
 ## USBのセットアップ
 
 ```bash
