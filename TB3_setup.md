@@ -197,6 +197,8 @@ PC
 rosrun rviz rviz -d `rospack find turtlebot3_description`/rviz/model.rviz
 ```
 
+なお、`rospack find turtlebot3_description`を挟んでいるクォート(記号)はシングルクォートではなくバッククォート。
+
 turtlebotを操作する
 
 PC
